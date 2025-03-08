@@ -9,7 +9,7 @@ const SplashScreenComponent = ({ onFinish }: { onFinish: () => void }) => {
     setTimeout(() => {
       SplashScreen.hideAsync(); 
       onFinish();
-    }, 3000);
+    }, 5000);
   }, []);
 
   return (

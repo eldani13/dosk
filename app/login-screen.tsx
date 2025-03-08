@@ -8,9 +8,9 @@ import {
   Image,
   Modal,
 } from "react-native";
-import VerificationScreen from "./VerificationScreen";
+import VerificationScreen from "../components/VerificationScreen";
+import PersonalDataScreen from "./personal-data";
 
-// 🔹 Definir las props que acepta LoginScreen
 interface LoginScreenProps {
   onLogin: () => void;
 }
@@ -19,6 +19,7 @@ export default function LoginScreen({ onLogin }: LoginScreenProps) {
   const [phone, setPhone] = useState("");
   const [showOptions, setShowOptions] = useState(false);
   const [showVerification, setShowVerification] = useState(false);
+  const [showPersonalData, setShowPersonalData] = useState(false);
 
   const handleSendCode = () => {
     if (phone.trim() !== "") {
@@ -33,10 +34,14 @@ export default function LoginScreen({ onLogin }: LoginScreenProps) {
     setShowVerification(true);
   };
 
-  // 🔹 Ahora `handleVerifyCode` usa `onLogin`
   const handleVerifyCode = () => {
-    onLogin(); // 🔥 Notifica a `RootLayout` que el usuario está autenticado
+    setShowVerification(false);
+    setShowPersonalData(true);
   };
+
+  if (showPersonalData) {
+    return <PersonalDataScreen />;
+  }
 
   if (showVerification) {
     return <VerificationScreen onVerify={handleVerifyCode} />;

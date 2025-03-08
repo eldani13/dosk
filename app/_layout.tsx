@@ -1,53 +1,48 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack, Slot } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
-import { useEffect, useState } from 'react';
-import 'react-native-reanimated';
-import SplashScreenComponent from '@/components/SplashScreen';
-import LoginScreen from '@/components/LoginScreen';
+import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
+import { useFonts } from "expo-font";
+import { Slot, useRouter } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import { StatusBar } from "expo-status-bar";
+import { useEffect, useState } from "react";
+import { View } from "react-native";
+import "react-native-reanimated";
+import { useColorScheme } from "@/hooks/useColorScheme";
+import SplashScreenComponent from "@/components/SplashScreen";
 
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-// Evita que la pantalla de carga desaparezca automáticamente
+// ✅ Evita que la pantalla de carga desaparezca automáticamente
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const [fontsLoaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    SpaceMono: require("@/assets/fonts/SpaceMono-Regular.ttf"),
   });
 
   useEffect(() => {
-    if (fontsLoaded) {
-      setTimeout(() => {
-        SplashScreen.hideAsync();
+    async function prepare() {
+      if (fontsLoaded) {
+        await SplashScreen.hideAsync();
         setIsLoading(false);
-      }, 3000);
+      }
     }
+    prepare();
   }, [fontsLoaded]);
 
-  if (isLoading) {
-    return <SplashScreenComponent onFinish={() => setIsLoading(false)} />;
-  }
-
-  if (!isAuthenticated) {
-    return <LoginScreen onLogin={() => setIsAuthenticated(true)} />;
-  }
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      router.replace("/login-screen"); //  Enviar a la pantalla de login si no está autenticado
+    }
+  }, [isLoading, isAuthenticated]);
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        {/* Asegura que todas las páginas puedan renderizarse */}
-        <Slot />
-
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
+    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+      <View style={{ flex: 1 }}>
+        {!isLoading && <Slot />}
+      </View>
       <StatusBar style="auto" />
     </ThemeProvider>
   );

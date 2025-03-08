@@ -13,7 +13,7 @@ export default function OfferScreen() {
   const router = useRouter();
   const [searching, setSearching] = useState(false);
   const [foundDriver, setFoundDriver] = useState(false);
-  const [acceptedDriver, setAcceptedDriver] = useState(false); // Nuevo estado
+  const [acceptedDriver, setAcceptedDriver] = useState(false); 
 
   useEffect(() => {
     if (searching) {
@@ -83,7 +83,7 @@ export default function OfferScreen() {
           <View style={styles.buttonRow}>
             <TouchableOpacity
               style={styles.acceptButton}
-              onPress={() => setAcceptedDriver(true)} // Cambia de pantalla
+              onPress={() => setAcceptedDriver(true)} 
             >
               <Text style={styles.acceptText}>Aceptar</Text>
             </TouchableOpacity>

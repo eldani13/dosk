@@ -17,10 +17,12 @@ export default function HomeScreen() {
       [newServices[1], newServices[index]] = [newServices[index], newServices[1]];
       setServices(newServices);
     } else {
-      // Redirigir a OfferScreen cuando se presione la opción del medio
-      router.push('/offer');
+      setTimeout(() => {
+        router.push('/offer');
+      });
     }
   };
+  
 
   return (
     <View style={styles.container}>

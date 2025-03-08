@@ -33,10 +33,11 @@ export default function VerificationScreen({ onVerify }: { onVerify: () => void 
 
   const handleVerify = () => {
     onVerify();
-    setTimeout(() => {
-      router.replace("/loading"); // 📌 Asegura que la navegación ocurre después del montaje
-    }, 100);
+    // setTimeout(() => {
+    //   router.replace("/personal-data"); // 📌 Primero va a la pantalla de datos personales
+    // }, 9000);
   };
+  
 
   return (
     <View style={styles.container}>

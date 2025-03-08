@@ -3,12 +3,11 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import { useRouter } from "expo-router";
 
 export default function Loading() {
-  const router = useRouter(); // ✅ Hook de Expo Router
+  const router = useRouter();
 
   useEffect(() => {
-    // Simulación de carga antes de redirigir
     const timer = setTimeout(() => {
-      router.replace("/"); // 🔥 Redirige a `index.tsx` (HomeScreen)
+      router.replace("/");
     }, 5000);
 
     return () => clearTimeout(timer);
