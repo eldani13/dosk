@@ -13,7 +13,7 @@ export default function OfferScreen() {
   const router = useRouter();
   const [searching, setSearching] = useState(false);
   const [foundDriver, setFoundDriver] = useState(false);
-  const [acceptedDriver, setAcceptedDriver] = useState(false); 
+  const [acceptedDriver, setAcceptedDriver] = useState(false);
 
   useEffect(() => {
     if (searching) {
@@ -27,7 +27,6 @@ export default function OfferScreen() {
 
   return (
     <View style={styles.container}>
-      {/* Mapa */}
       <View style={styles.header}>
         <Image
           source={require("@/assets/images/map-background.png")}
@@ -36,7 +35,6 @@ export default function OfferScreen() {
         <Image source={require("@/assets/images/pin.png")} style={styles.pin} />
       </View>
 
-      {/* Mostrar la pantalla final si se acepta el conductor */}
       {acceptedDriver ? (
         <View style={styles.finalScreen}>
           <View style={styles.mapContainer}>
@@ -61,10 +59,20 @@ export default function OfferScreen() {
                 <Text style={styles.carDetails}>Nissan Versa</Text>
                 <Text style={styles.carYear}>2018</Text>
               </View>
-              <Text style={styles.carColor}>Color: Azul</Text>
-              <Text style={styles.rating}>⭐ 5</Text>
+              <View style={styles.mainColor}>
+                <Text style={styles.carColor}>Color: Azul</Text>
+              </View>
+              <View style={styles.mainEstrella}>
+                <Text style={styles.rating}>5</Text>
+                <Image
+                  source={require("@/assets/images/estrella.png")}
+                  style={styles.estrellaImage}
+                />
+              </View>
             </View>
-            <Text style={styles.eta}>Llegada Aproximada: 2 min</Text>
+            <Text style={styles.eta}>
+              Llegada Aproximada: <Text style={styles.minuteText}>2</Text> min
+            </Text>
             <TouchableOpacity style={styles.callButton}>
               <Text style={styles.callText}>Llama a tu Driver</Text>
             </TouchableOpacity>
@@ -83,7 +91,7 @@ export default function OfferScreen() {
           <View style={styles.buttonRow}>
             <TouchableOpacity
               style={styles.acceptButton}
-              onPress={() => setAcceptedDriver(true)} 
+              onPress={() => setAcceptedDriver(true)}
             >
               <Text style={styles.acceptText}>Aceptar</Text>
             </TouchableOpacity>
@@ -244,6 +252,11 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     marginBottom: 10,
   },
+  estrellaImage: {
+    width: 15,
+    height: 15,
+    objectFit: "contain",
+  },
   driverName: {
     fontSize: 18,
     fontWeight: "bold",
@@ -336,7 +349,7 @@ const styles = StyleSheet.create({
   },
   rating: {
     fontSize: 18,
-    color: "#DDF000",
+    color: "#fff",
   },
   eta: {
     fontSize: 16,
@@ -368,5 +381,19 @@ const styles = StyleSheet.create({
   carInfo: {
     flexDirection: "column",
     alignItems: "center",
+  },
+  mainEstrella: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+  },
+
+  mainColor: {
+    display: "flex",
+    justifyContent: "center",
+  },
+  minuteText: {
+    color: "#DAFE2B",
   },
 });

@@ -1,8 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import { useRouter } from "expo-router";
 
-export default function VerificationScreen({ onVerify }: { onVerify: () => void }) {
+export default function VerificationScreen({
+  onVerify,
+}: {
+  onVerify: () => void;
+}) {
   const [countdown, setCountdown] = useState(60);
   const [code, setCode] = useState(["", "", "", "", ""]);
   const inputsRef = useRef<Array<TextInput | null>>([]);
@@ -34,16 +44,16 @@ export default function VerificationScreen({ onVerify }: { onVerify: () => void 
   const handleVerify = () => {
     onVerify();
     // setTimeout(() => {
-    //   router.replace("/personal-data"); // 📌 Primero va a la pantalla de datos personales
+    //   router.replace("/personal-data");
     // }, 9000);
   };
-  
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Te enviaremos un código</Text>
       <Text style={styles.subtitle}>
-        Según el método que escogiste, recibirás un código el cual tendrás que ingresar a continuación:
+        Según el método que escogiste, recibirás un código el cual tendrás que
+        ingresar a continuación:
       </Text>
 
       <View style={styles.codeContainer}>
@@ -61,7 +71,8 @@ export default function VerificationScreen({ onVerify }: { onVerify: () => void 
       </View>
 
       <Text style={styles.countdown}>
-        Puedes reenviar el código en <Text style={styles.bold}>{countdown}</Text> segundos
+        Puedes reenviar el código en{" "}
+        <Text style={styles.bold}>{countdown}</Text> segundos
       </Text>
 
       <TouchableOpacity

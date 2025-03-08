@@ -19,19 +19,14 @@ export default function PersonalDataScreen() {
   const [day, setDay] = useState("");
   const [year, setYear] = useState("");
 
-  // ✅ Estado para habilitar o deshabilitar el botón
   const isFormComplete = name && lastName && month && day && year;
 
   const handleSubmitData = () => {
-    console.log("Intentando navegar...");
-
     if (!navigationState?.key) {
-      console.log("⚠️ La navegación aún no está lista");
       return;
     }
 
     if (isFormComplete) {
-      console.log("✅ Navegando a /loading");
       router.replace("/loading");
     } else {
       alert("Por favor completa todos los datos");
@@ -127,14 +122,14 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: "#333",
     color: "#fff",
-    width: "100%",
+    width: "80%",
     padding: 15,
     borderRadius: 8,
     marginBottom: 10,
   },
   pickerContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     width: "100%",
   },
   picker: { flex: 1, color: "#fff", marginHorizontal: 5 },

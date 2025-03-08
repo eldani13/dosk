@@ -1,32 +1,35 @@
 import { Image, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
+import { Ionicons } from '@expo/vector-icons';
+import Menu from '@/components/Menu';
 import { useRouter } from 'expo-router';
 
 export default function HomeScreen() {
+  const router = useRouter();
   const [services, setServices] = useState([
     { id: 'package', image: require('@/assets/images/package.png'), label: 'Envio' },
     { id: 'car', image: require('@/assets/images/car.png'), label: 'Viaje' },
     { id: 'moto', image: require('@/assets/images/moto.png'), label: 'Viaje' },
   ]);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   
-  const router = useRouter(); // Para la navegación
-
-  const handleSelectService = (index: number) => {
+  const handleSelectService = (index:number) => {
     if (index !== 1) {
       const newServices = [...services];
       [newServices[1], newServices[index]] = [newServices[index], newServices[1]];
       setServices(newServices);
-    } else {
-      setTimeout(() => {
-        router.push('/offer');
-      });
     }
+    router.push("/offer");
   };
   
-
   return (
     <View style={styles.container}>
-      {/* Fondo con mapa y bienvenida */}
+      <TouchableOpacity onPress={() => setIsMenuOpen(true)} style={styles.menuButton}>
+        <Ionicons name="menu" size={32} color="white" />
+      </TouchableOpacity>
+
+      {isMenuOpen && <Menu onClose={() => setIsMenuOpen(false)} />}
+
       <View style={styles.header}>
         <Image source={require('@/assets/images/map-background.png')} style={styles.mapBackground} />
         <View style={styles.welcomeContainer}>
@@ -35,7 +38,6 @@ export default function HomeScreen() {
         </View>
       </View>
 
-      {/* Contenedor de selección de servicio */}
       <View style={styles.serviceContainer}>
         <Text style={styles.serviceTitle}>¿Qué servicio deseas utilizar?</Text>
         <Text style={styles.serviceSubtitle}>Selecciona el servicio que necesitas:</Text>
@@ -64,6 +66,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#111',
+  },
+  menuButton: {
+    position: 'absolute',
+    top: 70,
+    left: 20,
+    zIndex: 10,
   },
   header: {
     alignItems: 'center',
